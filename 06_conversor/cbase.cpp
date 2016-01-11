@@ -1,13 +1,18 @@
-#include<stdio.h>
-#include<stdlib.h>
+#include<stdio.h> //Librerias de Linux.
+#include<stdlib.h> //Librerias de Linux.
 
-#define BASE 8
+//Conversor de decimal a octal.
+
+#define BASE 8 //Definir la Base. Se puede cambiar para convertirlo en otro conversor
 
 int main(int argc, const char **argv){
 
-    int entrada;
+    int entrada; //Variable
 
-    printf("Introduce un numero entre 0 y 999: ");
+    printf("Introduce un numero entre 0 y 999: "); //Se imprime el enunciado.
+    
+    //Se indica el numero, se divide cada cifra entre la base y se imprime.
+    
     scanf(" %i", &entrada);
     printf("%i", entrada % BASE);
     entrada /= BASE;
