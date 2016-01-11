@@ -1,11 +1,14 @@
-#include <stdio.h>
-#include <stdlib.h>
+#include <stdio.h> //Librerias de Linux
+#include <stdlib.h> //Librerias de Linux
 
 int main() {
 
-int resultado;
+int resultado; //Variable
 
-printf("Escribe 10 numeros y te dare la media.\n");
+printf("Escribe 10 numeros y te dare la media.\n"); //El programa imprime el enunciado.
+
+//Se piden los 10 numeros y se guardan en la Variable.
+
 printf("Numero 1:");
 scanf("%i", &resultado);
 printf("Numero 2:");
@@ -27,7 +30,7 @@ scanf("%i", &resultado);
 printf("Numero 10:");
 scanf("%i", &resultado);
 
-printf("La media es %i.\n", resultado / 10);
+printf("La media es %i.\n", resultado / 10); //Se imprime el resultado.
 
 return EXIT_SUCCESS;
 
