@@ -1,6 +1,6 @@
 #include <stdio.h> //Librerias de Linux
 #include <stdlib.h> //Librerias de Linux
-
+//Version 1.0
 //Hace la media de 10 numeros que pide al usuario.
 
 int main() {
