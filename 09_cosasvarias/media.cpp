@@ -1,6 +1,8 @@
 #include <stdio.h> //Librerias de Linux
 #include <stdlib.h> //Librerias de Linux
 
+//Hace la media de 10 numeros que pide al usuario.
+
 int main() {
 
 int resultado; //Variable
