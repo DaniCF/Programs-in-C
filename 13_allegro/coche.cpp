@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include <allegro5/allegro.h>
+#include <allegro5/allegro_image.h>
+#include <allegro5/allegro_native_dialog.h>
 #include <allegro5/allegro_font.h>
 #include <allegro5/allegro_ttf.h>
 #include <math.h>
@@ -10,7 +12,7 @@ const int SCREEN_H = 720;
 const int BOUNCER_SIZE_X = 50;
 const int BOUNCER_SIZE_Y = 32;
 enum MYKEYS {
-   KEY_UP, KEY_DOWN, KEY_LEFT, KEY_RIGHT
+   KEY_UP, KEY_DOWN, KEY_LEFT, KEY_RIGHT, KEY_SPACE
 };
  
 int main(int argc, char **argv)
@@ -24,7 +26,7 @@ int main(int argc, char **argv)
    float vel_x, vel_y;
    float bouncer_x = SCREEN_W / 2.0 - BOUNCER_SIZE_Y / 2.0;
    float bouncer_y = SCREEN_H / 2.0 - BOUNCER_SIZE_Y / 2.0;
-   bool key[4] = { false, false, false, false };
+   bool key[5] = { false, false, false, false, false };
    bool redraw = true;
    bool doexit = false;
 
@@ -36,8 +38,7 @@ int main(int argc, char **argv)
    }
 
 
- 
-   if(!al_install_keyboard()) {
+    if(!al_install_keyboard()) {
       fprintf(stderr, "failed to initialize the keyboard!\n");
       return -1;
    }
@@ -55,7 +56,8 @@ int main(int argc, char **argv)
       return -1;
    }
  
-   bouncer = al_create_bitmap(BOUNCER_SIZE_X, BOUNCER_SIZE_Y);
+   bouncer = al_create_bitmap(BOUNCER_SIZE_X,BOUNCER_SIZE_Y);
+ 
    if(!bouncer) {
       fprintf(stderr, "failed to create bouncer bitmap!\n");
       al_destroy_display(display);
@@ -96,8 +98,12 @@ int main(int argc, char **argv)
       al_wait_for_event(event_queue, &ev);
  
       if(ev.type == ALLEGRO_EVENT_TIMER) {
-         if(key[KEY_UP] && length < 13) {
-            length += 6;
+         if(key[KEY_UP] && length < 15) {
+            length += 1;
+
+         }
+         else if(length > 0) {
+            length -= 0.1;
          }
  
          if(key[KEY_DOWN] && length > 0) {
@@ -110,6 +116,12 @@ int main(int argc, char **argv)
  
          if(key[KEY_RIGHT]) {
             angle = (angle + 0.1);
+         }
+
+         if(key[KEY_SPACE]) {
+            
+
+
          }
 
             vel_x = length * cos(angle);
@@ -141,6 +153,9 @@ int main(int argc, char **argv)
             case ALLEGRO_KEY_RIGHT:
                key[KEY_RIGHT] = true;
                break;
+            case ALLEGRO_KEY_SPACE:
+               key[KEY_SPACE] = true;
+               break;
          }
       }
       else if(ev.type == ALLEGRO_EVENT_KEY_UP) {
@@ -159,6 +174,10 @@ int main(int argc, char **argv)
  
             case ALLEGRO_KEY_RIGHT:
                key[KEY_RIGHT] = false;
+               break;
+
+            case ALLEGRO_KEY_SPACE:
+               key[KEY_SPACE] = false;
                break;
  
             case ALLEGRO_KEY_ESCAPE:
