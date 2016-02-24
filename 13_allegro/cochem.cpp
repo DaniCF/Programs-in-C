@@ -33,7 +33,10 @@ int main(int argc, char **argv)
    ALLEGRO_BITMAP *cuentakm = NULL;
    ALLEGRO_FONT *font = NULL;
    int gear = 1;
+<<<<<<< HEAD
    float RPM = 0;
+=======
+>>>>>>> 20862d793262373d1e00098ba2807071dddc1223
    float KMH = 0;
    float angle = 0;
    float length = 0;
@@ -141,6 +144,7 @@ int main(int argc, char **argv)
       al_wait_for_event(event_queue, &ev);
  
       if(ev.type == ALLEGRO_EVENT_TIMER) {
+<<<<<<< HEAD
 
          if(key[KEY_UP] &&  RPM < 10 && gear == 0) {
             RPM += 0.7;
@@ -199,12 +203,36 @@ int main(int argc, char **argv)
          }
  
          if(key[KEY_RIGHT] && length > 0) {
+=======
+         if(key[KEY_UP] && length < 2 && gear == 1) {
+            length += 0.2;
+         }
+
+         if(key[KEY_UP] && length < 4 && gear == 2) {
+            length += 0.4;
+         }
+
+         else if(length > 0) {
+            length -= 0.04;
+         }
+ 
+         if(key[KEY_DOWN] && length > 0) {
+            length -= 0.3;
+         }
+ 
+         if(key[KEY_LEFT]) {
+            angle = (angle - 0.1);
+         }
+ 
+         if(key[KEY_RIGHT]) {
+>>>>>>> 20862d793262373d1e00098ba2807071dddc1223
             angle = (angle + 0.1);
          }
 
          if(key[KEY_SPACE]) {
          }
 
+<<<<<<< HEAD
          if(key[KEY_SHIFT] && gear < 4) {
             gear += 1;
             RPM -= RPM;
@@ -215,6 +243,16 @@ int main(int argc, char **argv)
             gear -= 1;
             RPM -= RPM / 2;
             key[KEY_CONTROL] = false;
+=======
+         if(key[KEY_SHIFT] && gear <= 4) {
+            gear += 1;
+            
+            
+         }
+
+         if(key[KEY_CONTROL] && gear >= 1) {
+            gear -= 1;
+>>>>>>> 20862d793262373d1e00098ba2807071dddc1223
          }
 
 
@@ -309,7 +347,11 @@ int main(int argc, char **argv)
 
          al_draw_textf(font, al_map_rgb(255,0,0), 660, 360, 0, "%i", gear);
 
+<<<<<<< HEAD
          al_draw_rotated_bitmap(cuentakm, 90, CKM_Y / 2, 700, 360, RPM / 3, 0);
+=======
+         al_draw_rotated_bitmap(cuentakm, 90, CKM_Y / 2, 700, 360, KMH / 3, 0);
+>>>>>>> 20862d793262373d1e00098ba2807071dddc1223
 
          al_draw_rotated_bitmap(bouncer, BOUNCER_SIZE_X / 2, BOUNCER_SIZE_Y / 2, bouncer_x, bouncer_y - 300, angle, angle);
 
