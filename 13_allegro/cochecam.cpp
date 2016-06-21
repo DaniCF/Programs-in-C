@@ -7,6 +7,8 @@
 #include <math.h>
  
 const float FPS = 60;
+const int mundoLargo = 10000;
+const int mundoAncho = 10000;
 const int SCREEN_W = 1280;
 const int SCREEN_H = 720;
 const int BOUNCER_SIZE_X = 50;
@@ -22,8 +24,8 @@ enum MYKEYS {
    KEY_UP, KEY_DOWN, KEY_LEFT, KEY_RIGHT, KEY_SPACE, KEY_SHIFT, KEY_CONTROL
 };
  
-int main(int argc, char **argv){
-
+int main(int argc, char **argv)
+{
    ALLEGRO_DISPLAY *display = NULL;
    ALLEGRO_EVENT_QUEUE *event_queue = NULL;
    ALLEGRO_TIMER *timer = NULL;
@@ -32,17 +34,20 @@ int main(int argc, char **argv){
    ALLEGRO_BITMAP *pared2 = NULL;
    ALLEGRO_BITMAP *cuentakm = NULL;
    ALLEGRO_FONT *font = NULL;
-   int gear = 1;
+   int gear = 0;
    float RPM = 0;
    float KMH = 0;
    float angle = 0;
    float length = 0;
    float vel_x, vel_y;
-   float bouncer_x = SCREEN_W / 2.0 - BOUNCER_SIZE_Y / 2.0;
-   float bouncer_y = SCREEN_H / 2.0 - BOUNCER_SIZE_Y / 2.0;
-   bool key[5] = { false, false, false, false, false };
+   float bouncer_x = mundoLargo / 2;
+   float bouncer_y = mundoAncho / 2;
+   int camaraX = bouncer_x - SCREEN_W / 2;
+   int camaraY = bouncer_y - SCREEN_H / 2;
+   bool key[7] = { false, false, false, false, false, false, false };
    bool redraw = true;
    bool doexit = false;
+
 
 
  
@@ -141,9 +146,9 @@ int main(int argc, char **argv){
       al_wait_for_event(event_queue, &ev);
  
       if(ev.type == ALLEGRO_EVENT_TIMER) {
-
+         
          if(key[KEY_UP] &&  RPM < 10 && gear == 0) {
-            RPM += 0.7;
+            RPM += 0.4;
          }
 
          if(key[KEY_UP] &&  RPM < 10 && gear == 1) {
@@ -151,11 +156,11 @@ int main(int argc, char **argv){
          }
 
          if(key[KEY_UP] &&  RPM < 10 && gear == 2) {
-            RPM += 0.15;
+            RPM += 0.1;
          }
 
          if(key[KEY_UP] &&  RPM < 10 && gear == 3) {
-            RPM += 0.1;
+            RPM += 0.08;
          }
 
          if(key[KEY_UP] &&  RPM < 10 && gear == 4) {
@@ -167,19 +172,19 @@ int main(int argc, char **argv){
          }
 
          if(key[KEY_UP] && length < 5 && gear == 1) {
-            length += 1;
-         }
-
-         if(key[KEY_UP] && length < 10 && gear == 2) {
             length += 0.5;
          }
 
-         if(key[KEY_UP] && length < 20 && gear == 3) {
+         if(key[KEY_UP] && length < 10 && gear == 2) {
             length += 0.25;
          }
 
-         if(key[KEY_UP] && length < 30 && gear == 4) {
+         if(key[KEY_UP] && length < 20 && gear == 3) {
             length += 0.125;
+         }
+
+         if(key[KEY_UP] && length < 30 && gear == 4) {
+            length += 0.0625;
          }
 
          else if(length > 0) {
@@ -199,31 +204,9 @@ int main(int argc, char **argv){
          }
  
          if(key[KEY_RIGHT] && length > 0) {
-
-         if(key[KEY_UP] && length < 2 && gear == 1) {
-            length += 0.2;
-         }
-
-         if(key[KEY_UP] && length < 4 && gear == 2) {
-            length += 0.4;
-         }
-
-         else if(length > 0) {
-            length -= 0.04;
-         }
- 
-         if(key[KEY_DOWN] && length > 0) {
-            length -= 0.3;
-         }
- 
-         if(key[KEY_LEFT]) {
-            angle = (angle - 0.1);
-         }
- 
-         if(key[KEY_RIGHT]) {
             angle = (angle + 0.1);
          }
-
+ 
          if(key[KEY_SPACE]) {
          }
 
@@ -237,31 +220,37 @@ int main(int argc, char **argv){
             gear -= 1;
             RPM -= RPM / 2;
             key[KEY_CONTROL] = false;
-
-         if(key[KEY_SHIFT] && gear <= 4) {
-            gear += 1;
-            
-            
          }
-
-         if(key[KEY_CONTROL] && gear >= 1) {
-            gear -= 1;
-         }
-
 
             vel_x = length * cos(angle);
             vel_y = length * sin(angle);
             bouncer_x += vel_x;
             bouncer_y += vel_y;
-            KMH = length;
+
+
+         if (camaraX < 0){
+            camaraX = 0;
+         }
+
+         if (camaraY < 0) {
+            camaraY = 0;
+         }
+
+         if (camaraX > mundoAncho - SCREEN_W) {
+            camaraX = mundoAncho - SCREEN_W;
+         }
+
+         if (camaraY > mundoLargo - SCREEN_H) {
+            camaraY = mundoLargo - SCREEN_H;
+         }
  
          redraw = true;
       }
 
+
       else if(ev.type == ALLEGRO_EVENT_DISPLAY_CLOSE) {
          break;
       }
-      
       else if(ev.type == ALLEGRO_EVENT_KEY_DOWN) {
          switch(ev.keyboard.keycode) {
             case ALLEGRO_KEY_UP:
@@ -330,23 +319,23 @@ int main(int argc, char **argv){
          redraw = false;
  
          al_clear_to_color(al_map_rgb(240,240,240));
-         
-         al_draw_bitmap(pared, 100, 600, 0);
-         al_draw_bitmap(pared, 600, 600, 0);
-         al_draw_bitmap(pared, 100, 50, 0);
-         al_draw_bitmap(pared, 600, 50, 0);
-         al_draw_bitmap(pared2, 100, 400, 0);
-         al_draw_bitmap(pared2, 100, 100, 0);
+
+
+         al_draw_bitmap(pared, 100 - camaraX, 600 - camaraY, 0);
+         al_draw_bitmap(pared, 600 - camaraX, 600 - camaraY, 0);
+         al_draw_bitmap(pared, 100 - camaraX, 50 - camaraY, 0);
+         al_draw_bitmap(pared, 600 - camaraX, 50 - camaraY, 0);
+         al_draw_bitmap(pared2, 100 - camaraX, 400 - camaraY, 0);
+         al_draw_bitmap(pared2, 100 - camaraX, 100 - camaraY, 0);
 
          al_draw_textf(font, al_map_rgb(255,0,0), 660, 360, 0, "%i", gear);
-
+         al_draw_textf(font, al_map_rgb(255,0,0), 660, 420, 0, "%.0f", length * 3);
 
          al_draw_rotated_bitmap(cuentakm, 90, CKM_Y / 2, 700, 360, RPM / 3, 0);
-
-
-         al_draw_rotated_bitmap(bouncer, BOUNCER_SIZE_X / 2, BOUNCER_SIZE_Y / 2, bouncer_x, bouncer_y - 300, angle, angle);
-
  
+         al_draw_rotated_bitmap(bouncer, BOUNCER_SIZE_X / 3, BOUNCER_SIZE_Y / 2, bouncer_x, bouncer_y, angle, angle);
+
+        
          al_flip_display();
       }
    }
@@ -357,4 +346,4 @@ int main(int argc, char **argv){
    al_destroy_event_queue(event_queue);
  
    return 0;
-}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}
+}
