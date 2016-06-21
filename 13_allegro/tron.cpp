@@ -12,16 +12,26 @@ const int SCREEN_W = 1280;
 const int SCREEN_H = 720;
 const int BOUNCER_SIZE_X = 30;
 const int BOUNCER_SIZE_Y = 15;
+<<<<<<< HEAD
+=======
+const int paredXY = 5;
+>>>>>>> c64ea440179d489e3d292f01efc05afbb453ee5b
 enum MYKEYS {
    KEY_UP, KEY_DOWN, KEY_LEFT, KEY_RIGHT, KEY_SPACE
 };
  
+<<<<<<< HEAD
 int main(int argc, char **argv){
 
+=======
+int main(int argc, char **argv)
+{
+>>>>>>> c64ea440179d489e3d292f01efc05afbb453ee5b
    ALLEGRO_DISPLAY *display = NULL;
    ALLEGRO_EVENT_QUEUE *event_queue = NULL;
    ALLEGRO_TIMER *timer = NULL;
    ALLEGRO_BITMAP *bouncer = NULL;
+<<<<<<< HEAD
    ALLEGRO_FONT *font = NULL;
    
    float angle = 0;
@@ -29,6 +39,14 @@ int main(int argc, char **argv){
    int vel_x, vel_y;
    int bouncer_x = SCREEN_W / 10 - BOUNCER_SIZE_Y / 2.0;
    int bouncer_y = SCREEN_H / 2.0 - BOUNCER_SIZE_Y / 2.0;
+=======
+   ALLEGRO_BITMAP *pared = NULL;
+   float angle = 0;
+   float length = 0;
+   float vel_x, vel_y;
+   float bouncer_x = SCREEN_W / 2.0 - BOUNCER_SIZE_Y / 2.0;
+   float bouncer_y = SCREEN_H / 2.0 - BOUNCER_SIZE_Y / 2.0;
+>>>>>>> c64ea440179d489e3d292f01efc05afbb453ee5b
    bool key[5] = { false, false, false, false, false };
    bool redraw = true;
    bool doexit = false;
@@ -60,12 +78,17 @@ int main(int argc, char **argv){
       return -1;
    }
 
+<<<<<<< HEAD
    al_init_font_addon();
    al_init_ttf_addon();
 
    font = al_load_ttf_font("DTM-Sans.otf",72,0);
 
    bouncer = al_create_bitmap(BOUNCER_SIZE_X,BOUNCER_SIZE_Y);
+=======
+   bouncer = al_create_bitmap(BOUNCER_SIZE_X,BOUNCER_SIZE_Y);
+   pared = al_create_bitmap(paredXY,paredXY);
+>>>>>>> c64ea440179d489e3d292f01efc05afbb453ee5b
  
    if(!bouncer) {
       fprintf(stderr, "failed to create bouncer bitmap!\n");
@@ -78,6 +101,13 @@ int main(int argc, char **argv){
  
    al_clear_to_color(al_map_rgb(0,255,255));
 
+<<<<<<< HEAD
+=======
+   al_set_target_bitmap(pared);
+ 
+   al_clear_to_color(al_map_rgb(255,0,0));
+ 
+>>>>>>> c64ea440179d489e3d292f01efc05afbb453ee5b
    al_set_target_bitmap(al_get_backbuffer(display));
  
    event_queue = al_create_event_queue();
@@ -189,9 +219,15 @@ int main(int argc, char **argv){
          al_clear_to_color(al_map_rgb(0,0,0));
 
          al_draw_rotated_bitmap(bouncer, BOUNCER_SIZE_X / 2, BOUNCER_SIZE_Y / 2, bouncer_x, bouncer_y, angle, angle);
+<<<<<<< HEAD
          
          al_draw_textf(font, al_map_rgb(0,0,255), 1000, 560, 0, "X: %i", bouncer_x);
          al_draw_textf(font, al_map_rgb(0,0,255), 1000, 620, 0, "Y: %i", bouncer_y);
+=======
+
+         al_hold_bitmap_drawing(1);
+            al_draw_rotated_bitmap(pared, paredXY / 2, paredXY / 2, bouncer_x, bouncer_y, 0, 0);
+>>>>>>> c64ea440179d489e3d292f01efc05afbb453ee5b
 
          al_flip_display();
       }
