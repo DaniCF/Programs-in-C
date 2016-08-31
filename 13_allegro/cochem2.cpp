@@ -80,7 +80,9 @@ int main(int argc, char **argv)
 
    font = al_load_ttf_font("DTM-Sans.otf",72,0);
  
-   bouncer = al_create_bitmap(BOUNCER_SIZE_X,BOUNCER_SIZE_Y);
+   bouncer = al_load_bitmap("car.png");
+   al_convert_mask_to_alpha(bouncer, al_map_rgb(255,255,255));
+   
    pared = al_create_bitmap(PARED_X,PARED_Y);
    pared2 = al_create_bitmap(PARED2_X, PARED2_Y);
    cuentakm = al_create_bitmap(CKM_X, CKM_Y);
@@ -92,10 +94,7 @@ int main(int argc, char **argv)
       return -1;
    }
  
-   al_set_target_bitmap(bouncer);
- 
-   al_clear_to_color(al_map_rgb(0, 0, 0));
- 
+
    al_set_target_bitmap(al_get_backbuffer(display));
 
    al_set_target_bitmap(pared);
